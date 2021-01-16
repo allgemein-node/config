@@ -1,4 +1,4 @@
-import {suite, test} from "mocha-typescript";
+import {suite, test} from "@testdeck/mocha";
 import {expect} from "chai";
 
 import {Config} from "../../src/config/Config";
@@ -7,7 +7,7 @@ import * as _ from 'lodash'
 import {FileConfig} from "../../src/config/handler";
 import {IFileConfigOptions} from "../../src/config/handler/IFileConfigOptions";
 import {FileSupport} from "../../src/filesupport/FileSupport";
-import {PlatformUtils} from "commons-base";
+import {PlatformUtils} from "@allgemein/base";
 
 @suite('fixtures/issues_180104')
 class Tests {

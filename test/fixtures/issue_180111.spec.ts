@@ -1,4 +1,4 @@
-// import {suite, test} from "mocha-typescript";
+// import {suite, test} from "@testdeck/mocha";
 // import {Utils} from "../../src/utils/Utils";
 // import {SystemConfig} from "../../src/config/handler/SystemConfig";
 // import {FileConfig} from "../../src/config/handler/FileConfig";

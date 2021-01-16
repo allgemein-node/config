@@ -3,7 +3,7 @@ import * as mocha from 'mocha';
 describe('',()=>{});
 
 
-import {suite, test, slow, timeout, pending} from "mocha-typescript";
+import {suite, test, slow, timeout, pending} from "@testdeck/mocha";
 import {expect} from "chai";
 import {InterpolationSupport} from "../../src/supports/InterpolationSupport";
 import {IConfigData} from "../../src/config/IConfigData";

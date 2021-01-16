@@ -3,7 +3,7 @@ import * as mocha from 'mocha';
 describe('',()=>{});
 
 
-import {suite, test} from "mocha-typescript";
+import {suite, test} from "@testdeck/mocha";
 import {expect} from "chai";
 import {SystemConfig} from "../../src/config/handler/SystemConfig";
 import {ConfigJar} from "../../src/config/ConfigJar";

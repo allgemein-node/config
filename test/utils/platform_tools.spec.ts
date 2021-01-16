@@ -3,9 +3,9 @@ import * as mocha from 'mocha';
 describe('',()=>{});
 
 
-import {suite, test, slow, timeout, pending} from "mocha-typescript";
+import {suite, test, slow, timeout, pending} from "@testdeck/mocha";
 import {expect} from "chai";
-import {PlatformUtils} from "commons-base";
+import {PlatformUtils} from "@allgemein/base";
 
 
 //import * as config from 'config';

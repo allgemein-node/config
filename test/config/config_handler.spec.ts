@@ -5,7 +5,7 @@ describe('', () => {
 });
 
 
-import {suite, test, slow, timeout, pending} from "mocha-typescript";
+import {suite, test, slow, timeout, pending} from "@testdeck/mocha";
 import {expect} from "chai";
 
 import {ConfigHandler} from "../../src/config/ConfigHandler";

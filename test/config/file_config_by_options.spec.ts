@@ -1,10 +1,10 @@
-import {suite, test} from "mocha-typescript";
+import {suite, test} from "@testdeck/mocha";
 import {expect} from "chai";
 import {Config} from "../../src/config/Config";
 import {IFileConfigOptions} from "../../src/config/handler/IFileConfigOptions";
 import {JsonFileSupport} from "../../src/filesupport/types/JsonFileSupport";
 import {ConfigHandler} from "../../src/config/ConfigHandler";
-import {PlatformUtils} from "commons-base";
+import {PlatformUtils} from "@allgemein/base";
 
 const SUBTESTPATH: string = 'testfolders/file/config';
 

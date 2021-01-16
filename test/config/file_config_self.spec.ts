@@ -1,6 +1,6 @@
 
 
-import {suite, test, slow, timeout, pending} from "mocha-typescript";
+import {suite, test, slow, timeout, pending} from "@testdeck/mocha";
 import {expect} from "chai";
 
 import {IConfigData} from "../../src/config/IConfigData";

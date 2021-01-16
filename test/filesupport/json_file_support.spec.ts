@@ -3,7 +3,7 @@ import * as mocha from 'mocha';
 describe('',()=>{});
 
 
-import {suite, test, slow, timeout, pending} from "mocha-typescript";
+import {suite, test, slow, timeout, pending} from "@testdeck/mocha";
 import {expect} from "chai";
 import {inspect} from "util";
 import {JsonFileSupport} from "../../src/filesupport/types/JsonFileSupport";
