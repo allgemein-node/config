@@ -1,9 +1,6 @@
 import {suite, test} from '@testdeck/mocha';
 import {expect} from 'chai';
-import {PropertiesFileSupport} from '../../src/filesupport/types/PropertiesFileSupport';
-
-describe('', () => {
-});
+import {PropertiesFileSupport} from '../../../src/filesupport/types/PropertiesFileSupport';
 
 
 @suite('filesupport/types/PropertiesFileSupport')

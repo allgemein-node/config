@@ -1,10 +1,10 @@
-import {suite, test} from "@testdeck/mocha";
-import {expect} from "chai";
-import {Config} from "../../src/config/Config";
-import {IFileConfigOptions} from "../../src/config/handler/IFileConfigOptions";
-import {JsonFileSupport} from "../../src/filesupport/types/JsonFileSupport";
-import {ConfigHandler} from "../../src/config/ConfigHandler";
-import {PlatformUtils} from "@allgemein/base";
+import {suite, test} from '@testdeck/mocha';
+import {expect} from 'chai';
+import {Config} from '../../../src/config/Config';
+import {IFileConfigOptions} from '../../../src/config/handler/IFileConfigOptions';
+import {JsonFileSupport} from '../../../src/filesupport/types/JsonFileSupport';
+import {ConfigHandler} from '../../../src/config/ConfigHandler';
+import {PlatformUtils} from '@allgemein/base';
 
 const SUBTESTPATH: string = 'testfolders/file/config';
 
@@ -21,7 +21,7 @@ class FileConfigTests {
       configs: [
         <IFileConfigOptions>{
           type: 'file',
-          file: `./test/${SUBTESTPATH}/default.json`
+          file: `./test/functional/${SUBTESTPATH}/default.json`
         }
       ]
     });
@@ -39,7 +39,7 @@ class FileConfigTests {
       configs: [<IFileConfigOptions>{
         namespace: 'other',
         type: 'file',
-        file: `./test/${SUBTESTPATH}/default.json`
+        file: `./test/functional/${SUBTESTPATH}/default.json`
       }]
 
     });
@@ -58,7 +58,7 @@ class FileConfigTests {
       configs: [<IFileConfigOptions>{
         namespace: 'other',
         type: 'file',
-        file: `./test/${SUBTESTPATH}/default.json`
+        file: `./test/functional/${SUBTESTPATH}/default.json`
       }]
 
     }, false);
@@ -77,7 +77,7 @@ class FileConfigTests {
         namespace: 'other',
         type: 'file',
         file: {
-          dirname: `./test/${SUBTESTPATH}`,
+          dirname: `./test/functional/${SUBTESTPATH}`,
           filename: 'default'
         }
       }]
@@ -120,7 +120,7 @@ class FileConfigTests {
           namespace: 'other',
           type: 'file',
           file: {
-            dirname: `./test/${SUBTESTPATH}`,
+            dirname: `./test/functional/${SUBTESTPATH}`,
             filename: 'default'
           },
           pattern: [
@@ -129,7 +129,7 @@ class FileConfigTests {
           ]
         }
       ]
-    }, false)
+    }, false);
   }
 
   @test
@@ -160,7 +160,7 @@ class FileConfigTests {
 
     // Interpolation arguments is set, but file doesn't exists!
     Config.clear();
-    process.env['configfile'] = `./test/${SUBTESTPATH}/default.json`;
+    process.env['configfile'] = `./test/functional/${SUBTESTPATH}/default.json`;
     opts = Config.options({configs: [{type: 'file', file: '${env.configfile}'}]});
 
     expect(opts.configs).has.length(2);
@@ -170,26 +170,26 @@ class FileConfigTests {
       file: process.env['configfile'],
       state: true,
       namespace: 'default'
-    })
+    });
   }
 
   @test
   'interpolate by previous file loaded vars'() {
     Config.clear();
-    let dir = `./test/${SUBTESTPATH}`
+    let dir = `./test/functional/${SUBTESTPATH}`;
     let opts = Config.options({
       configs: [
         {type: 'file', file: dir + '/app.json'},
         {type: 'file', file: dir + '/${appname}.json'}
       ]
     });
-    expect(opts.configs).to.have.length(3)
+    expect(opts.configs).to.have.length(3);
     expect(opts.configs[2]).to.deep.include({
       type: 'file',
       file: dir + '/hallo.json',
       state: true,
       namespace: 'default'
-    })
+    });
 
   }
 
@@ -197,14 +197,14 @@ class FileConfigTests {
   @test
   'set workdir'() {
     Config.clear();
-    let dir = `./test/${SUBTESTPATH}`;
+    let dir = `./test/functional/${SUBTESTPATH}`;
     let opts = Config.options({
-      workdir:dir,
+      workdir: dir,
       configs: [{type: 'file', file: './app.json'}]
     });
 
-    expect(opts.workdir).to.eq('./test/testfolders/file/config');
-    expect(opts.configs).to.have.length(2)
+    expect(opts.workdir).to.eq('./test/functional/testfolders/file/config');
+    expect(opts.configs).to.have.length(2);
     expect(opts.configs[1]).to.deep.include({
       type: 'file',
       file: './app.json',

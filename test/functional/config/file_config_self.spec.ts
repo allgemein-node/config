@@ -1,16 +1,13 @@
+import {suite, test} from '@testdeck/mocha';
+import {expect} from 'chai';
 
-
-import {suite, test, slow, timeout, pending} from "@testdeck/mocha";
-import {expect} from "chai";
-
-import {IConfigData} from "../../src/config/IConfigData";
-import {FileSupport} from "../../src/filesupport/FileSupport";
-
-import {IFileConfigOptions} from "../../src/config/handler/IFileConfigOptions";
-import {Config} from "../../src/config/Config";
-import {SystemConfig} from "../../src/config/handler/SystemConfig";
-import {FileConfig} from "../../src/config/handler/FileConfig";
-import {ConfigJar} from "../../src/config/ConfigJar";
+import {IConfigData} from '../../../src/config/IConfigData';
+import {FileSupport} from '../../../src/filesupport/FileSupport';
+import {IFileConfigOptions} from '../../../src/config/handler/IFileConfigOptions';
+import {Config} from '../../../src/config/Config';
+import {SystemConfig} from '../../../src/config/handler/SystemConfig';
+import {FileConfig} from '../../../src/config/handler/FileConfig';
+import {ConfigJar} from '../../../src/config/ConfigJar';
 
 
 const SUBTESTPATH: string = 'testfolders/file/config';
@@ -48,7 +45,7 @@ class FileConfigTests {
     systemJar.interpolateAgainst(test);
     expect(test.pattern[0]).to.eq('default-testhost');
     expect(test.pattern[1]).to.eq('default-testing');
-    expect(test.pattern[2]).to.eq('default-testhost-testing')
+    expect(test.pattern[2]).to.eq('default-testhost-testing');
 
   }
 
@@ -83,7 +80,7 @@ class FileConfigTests {
     // Normalize and resolve
     cfg = new FileConfig(<IFileConfigOptions>{
       file: {
-        dirname: `./test/${SUBTESTPATH}`,
+        dirname: `./test/functional/${SUBTESTPATH}`,
         filename: 'default'
       }
     }, [systemJar.data]);
@@ -93,7 +90,7 @@ class FileConfigTests {
     // use patterns
     cfg = new FileConfig(<IFileConfigOptions>{
       file: {
-        dirname: `./test/${SUBTESTPATH}`,
+        dirname: `./test/functional/${SUBTESTPATH}`,
         filename: 'default'
       },
       pattern: [
@@ -107,7 +104,7 @@ class FileConfigTests {
     expect(jar.get('hallo')).to.eq('welt2');
     expect(jar.get('p_testing')).to.be.true;
     expect(jar.get('p_testhost')).to.be.true;
-    expect(jar.get('p_testhost_testing')).to.be.true
+    expect(jar.get('p_testhost_testing')).to.be.true;
 
   }
 

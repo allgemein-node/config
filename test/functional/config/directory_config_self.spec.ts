@@ -1,12 +1,12 @@
-import {suite, test} from "@testdeck/mocha";
-import {expect} from "chai";
-import {DirectoryConfig} from "../../src/config/handler/DirectoryConfig";
-import {Utils} from "../../src/utils/Utils";
-import {IDirectoryConfigOptions} from "../../src/config/handler/IDirectoryConfigOptions";
-import {NAMING_BY_DIRECTORYPATH} from "../../src/types";
-import {IFileConfigOptions} from "../../src/config/handler/IFileConfigOptions";
-import {ConfigJar} from "../../src/config/ConfigJar";
-import {FileSupport} from "../../src/filesupport/FileSupport";
+import {suite, test} from '@testdeck/mocha';
+import {expect} from 'chai';
+import {DirectoryConfig} from '../../../src/config/handler/DirectoryConfig';
+import {Utils} from '../../../src/utils/Utils';
+import {IDirectoryConfigOptions} from '../../../src/config/handler/IDirectoryConfigOptions';
+import {NAMING_BY_DIRECTORYPATH} from '../../../src/types';
+import {IFileConfigOptions} from '../../../src/config/handler/IFileConfigOptions';
+import {ConfigJar} from '../../../src/config/ConfigJar';
+import {FileSupport} from '../../../src/filesupport/FileSupport';
 
 
 let opts: IDirectoryConfigOptions;
@@ -24,7 +24,7 @@ class DirectoryConfigTests {
 
     opts =
       {
-        dirname: './test/testfolders/submodules_dirs'
+        dirname: './test/functional/testfolders/submodules_dirs'
       };
 
     dirCfg = new DirectoryConfig(opts);
@@ -34,7 +34,7 @@ class DirectoryConfigTests {
     // suffixPattern
     opts = Utils.merge(DirectoryConfig.DEFAULT_DIRECTORY_OPTIONS,
       {
-        dirname: './test/testfolders/submodules_dirs',
+        dirname: './test/functional/testfolders/submodules_dirs',
         suffixPattern: ['${os.hostname}']
       }
     );
@@ -49,7 +49,7 @@ class DirectoryConfigTests {
     // namespacing
     opts =
       <IDirectoryConfigOptions>{
-        dirname: './test/testfolders/submodules_dirs',
+        dirname: './test/functional/testfolders/submodules_dirs',
         namespaceing: NAMING_BY_DIRECTORYPATH
       };
 
@@ -64,7 +64,7 @@ class DirectoryConfigTests {
     // prefixing
     opts =
       <IDirectoryConfigOptions>{
-        dirname: './test/testfolders/submodules_dirs',
+        dirname: './test/functional/testfolders/submodules_dirs',
         prefixing: NAMING_BY_DIRECTORYPATH
       };
 
@@ -75,7 +75,7 @@ class DirectoryConfigTests {
     first = files.shift();
     expect(first.namespace).to.eq('default');
     expect(first.prefix).to.eq('config_01');
-    expect(first.file['filename']).to.eq('default')
+    expect(first.file['filename']).to.eq('default');
 
   }
 
@@ -83,7 +83,7 @@ class DirectoryConfigTests {
   'exclusion'() {
     opts =
       <IDirectoryConfigOptions>{
-        dirname: './test/testfolders/submodules_dirs',
+        dirname: './test/functional/testfolders/submodules_dirs',
         exclude: ['config_02/**']
       };
 
@@ -92,7 +92,7 @@ class DirectoryConfigTests {
     // console.log(files)
     expect(files.length).to.eq(3);
     first = files.shift();
-    expect(first.namespace).to.eq('default')
+    expect(first.namespace).to.eq('default');
 
   }
 
@@ -101,7 +101,7 @@ class DirectoryConfigTests {
     FileSupport.reload();
     opts =
       <IDirectoryConfigOptions>{
-        dirname: './test/testfolders/submodules_dirs',
+        dirname: './test/functional/testfolders/submodules_dirs',
       };
 
     dirCfg = new DirectoryConfig(opts);
@@ -117,7 +117,7 @@ class DirectoryConfigTests {
     expect(jars[0].get('config01')).to.eq('yes');
     expect(jars[0].get('config02')).to.eq('yes');
     expect(jars[0].get('schema01')).to.be.true;
-    expect(jars[0].get('schema02')).to.be.true
+    expect(jars[0].get('schema02')).to.be.true;
 
 
   }
