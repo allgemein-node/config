@@ -1,16 +1,12 @@
-import * as fs from 'fs';
-
-import {ConfigSupport} from "../ConfigSupport";
-import {ConfigJar} from "../ConfigJar";
-import {IFileConfigOptions} from "./IFileConfigOptions";
-import {FileSupport} from "../../filesupport/FileSupport";
-
-import {IConfigData} from "../IConfigData";
-
-import {IFilePath} from "./IFilePath";
-import {FileSource} from "./FileSource";
-import {IJarOptions} from "../IJarOptions";
-import {PlatformUtils} from "commons-base";
+import {ConfigSupport} from '../ConfigSupport';
+import {ConfigJar} from '../ConfigJar';
+import {IFileConfigOptions} from './IFileConfigOptions';
+import {FileSupport} from '../../filesupport/FileSupport';
+import {IConfigData} from '../IConfigData';
+import {IFilePath} from './IFilePath';
+import {FileSource} from './FileSource';
+import {IJarOptions} from '../IJarOptions';
+import {PlatformUtils} from '@allgemein/base';
 
 
 /**
@@ -20,11 +16,11 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
 
 
   constructor(options: IFileConfigOptions, jarsData: IConfigData[] = []) {
-    super(options, jarsData)
+    super(options, jarsData);
   }
 
   type() {
-    return 'file'
+    return 'file';
   }
 
 
@@ -37,18 +33,18 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
       let ext = supportedTypes.shift();
       used_path = file.dirname + '/' + file.filename + '.' + ext;
       if (PlatformUtils.fileExist(used_path)) {
-        used_ext = ext
+        used_ext = ext;
       }
     }
 
     if (!used_ext || !used_path) {
-      return null
+      return null;
     }
 
     file.type = used_ext;
     let supportInfo = FileSupport.getInfoByExtension(used_ext);
     if (!supportInfo.enabled) {
-      throw new Error(`${used_ext} support not enabled`)
+      throw new Error(`${used_ext} support not enabled`);
     }
 
     let support = FileSupport.getSupportByExtension(used_ext);
@@ -56,14 +52,14 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
     let data: IConfigData = null;
 
     if (supportInfo.readable) {
-      data = support.read(used_path)
+      data = support.read(used_path);
     } else if (supportInfo.parseable) {
-      content = fs.readFileSync(used_path, 'UTF-8');
-      data = support.parse(content)
+      content = PlatformUtils.readFileSync(used_path);
+      data = support.parse(content);
     } else {
-      throw new Error('is not readable or parseable')
+      throw new Error('is not readable or parseable');
     }
-    return data
+    return data;
 
   }
 
@@ -86,7 +82,7 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
       */
       if (data) {
         let source = new FileSource({data: data, file: path, prefix: this.$options.prefix});
-        collection.push(source)
+        collection.push(source);
       }
     });
 
@@ -101,13 +97,13 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
         dirname: PlatformUtils.dirname(filepath),
         filename: PlatformUtils.filename(filepath),
         type: PlatformUtils.pathExtname(filepath),
-      }
+      };
     } else {
       file = path;
-      file.dirname = PlatformUtils.pathNormilize(PlatformUtils.pathResolve(file.dirname))
+      file.dirname = PlatformUtils.pathNormilize(PlatformUtils.pathResolve(file.dirname));
       // TODO check if extension is falsely set in filename
     }
-    return file
+    return file;
   }
 
 
@@ -123,15 +119,15 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
         let subfile: IFilePath = null;
         if (/^\.?\//.test(pattern)) {
           // full or app relative path given!
-          subfile = self.explodeFilePath(pattern)
+          subfile = self.explodeFilePath(pattern);
         } else {
-          subfile = self.explodeFilePath(basefile.dirname + '/' + pattern)
+          subfile = self.explodeFilePath(basefile.dirname + '/' + pattern);
         }
-        files.push(subfile)
-      })
+        files.push(subfile);
+      });
     }
 
-    return files
+    return files;
   }
 
 
@@ -142,20 +138,20 @@ export class FileConfig extends ConfigSupport<IFileConfigOptions> {
 
     let additional_files = this.attachPatternFiles(basefile);
     if (additional_files.length) {
-      files = files.concat(additional_files)
+      files = files.concat(additional_files);
     }
 
     let sources = this.readFiles(files);
 
     if (sources.length == 0) {
-      return null
+      return null;
     }
 
     let jar = ConfigJar.create(<IJarOptions>this.$options);
     sources.forEach(_source => {
-      jar.merge(_source)
+      jar.merge(_source);
     });
-    return jar
+    return jar;
   }
 
 

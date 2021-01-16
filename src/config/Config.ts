@@ -1,18 +1,17 @@
 import * as _ from 'lodash';
-import {Utils} from "../utils/Utils";
+import {Utils} from '../utils/Utils';
 
-import {ConfigJar} from "./ConfigJar";
-import {IOptions} from "./IOptions";
-import {IConfigData} from "./IConfigData";
+import {ConfigJar} from './ConfigJar';
+import {IOptions} from './IOptions';
+import {IConfigData} from './IConfigData';
 
-import {ConfigHandler} from "./ConfigHandler";
-import {FileSupport} from "../filesupport/FileSupport";
-import {IJarOptions} from "./IJarOptions";
-import {DEFAULT_JAR_NAME} from "../types";
-import {ConfigSupport} from "./ConfigSupport";
-import {InterpolationSupport} from "../supports/InterpolationSupport";
-import {PlatformUtils} from "commons-base";
-
+import {ConfigHandler} from './ConfigHandler';
+import {FileSupport} from '../filesupport/FileSupport';
+import {IJarOptions} from './IJarOptions';
+import {DEFAULT_JAR_NAME} from '../types';
+import {ConfigSupport} from './ConfigSupport';
+import {InterpolationSupport} from '../supports/InterpolationSupport';
+import {PlatformUtils} from '@allgemein/base';
 
 
 export class Config {
@@ -42,24 +41,23 @@ export class Config {
 
   static instance(init: boolean = true): Config {
     if (!this.$self) {
-      this.$self = new Config()
+      this.$self = new Config();
     }
 
     if (!this.$self.isInitialized() && init) {
-      this.$self._options(this.DEFAULT_OPTIONS)
+      this.$self._options(this.DEFAULT_OPTIONS);
     }
 
-    return this.$self
+    return this.$self;
   }
 
   isInitialized() {
-    return this.$init
+    return this.$init;
   }
 
 
-
   static jar(name: string | IJarOptions = 'default', jar?: ConfigJar): ConfigJar {
-    return this.instance(false)._jar(name, jar)
+    return this.instance(false)._jar(name, jar);
   }
 
   _jar(name: string | IJarOptions = 'default', jar?: ConfigJar, override: boolean = false): ConfigJar {
@@ -67,120 +65,120 @@ export class Config {
     let _name: string = null;
     if (!Utils.isString(name)) {
       options = <IJarOptions>name;
-      _name = options.namespace
+      _name = options.namespace;
     } else {
       _name = <string>name;
-      options.namespace = _name
+      options.namespace = _name;
     }
 
     if (this.$jars[_name] && !jar) {
       // jar already exists
       if (options && override) {
-        this.$jars[_name] = ConfigJar.create(options)
+        this.$jars[_name] = ConfigJar.create(options);
       }
     } else if (this.$jars[_name] && jar) {
       if (!override) {
-        throw new Error('config jar is already set')
+        throw new Error('config jar is already set');
       }
-      this.$jars[_name] = jar
+      this.$jars[_name] = jar;
     } else if (!this.$jars[_name] && jar) {
-      this.$jars[_name] = jar
+      this.$jars[_name] = jar;
     } else {
-      this.$jars[_name] = ConfigJar.create(options)
+      this.$jars[_name] = ConfigJar.create(options);
     }
-    return this.$jars[_name]
+    return this.$jars[_name];
   }
 
   // TODO return immutable
   static get jars(): ConfigJar[] {
-    return this.instance(false)._jars
+    return this.instance(false)._jars;
   }
 
   get _jars(): ConfigJar[] {
     let self = this;
     let jars: ConfigJar[] = [];
     Object.keys(this.$jars).forEach(k => {
-      jars.push(self.$jars[k])
+      jars.push(self.$jars[k]);
     });
-    return jars
+    return jars;
   }
 
 
   static all(): IConfigData[] {
-    return this.instance(false)._jarsData
+    return this.instance(false)._jarsData;
   }
 
   static get jarsData(): IConfigData[] {
-    return this.instance(false)._jarsData
+    return this.instance(false)._jarsData;
   }
 
   get _jarsData(): IConfigData[] {
     let self = this;
     let jars: IConfigData[] = [];
     Object.keys(this.$jars).forEach(k => {
-      jars.push(self.$jars[k].data)
+      jars.push(self.$jars[k].data);
     });
-    return jars
+    return jars;
   }
 
 
   static hasJar(name: string): boolean {
-    return this.instance(false)._hasJar(name)
+    return this.instance(false)._hasJar(name);
   }
 
   _hasJar(name: string): boolean {
-    return !!this.$jars[name]
+    return !!this.$jars[name];
   }
 
   static options(options: IOptions = null, append: boolean = true): IOptions {
-    return this.instance()._options(options, append)
+    return this.instance()._options(options, append);
   }
 
 
   _options(_options: IOptions = null, append: boolean = true): IOptions {
     if (_options == null) {
-      return this.$options
+      return this.$options;
     }
 
     this.$init = true;
 
-    let options: IOptions = {}
+    let options: IOptions = {};
     if (!_options.configs) {
       // Test if configs key was ignored
       if (Utils.isArray(_options) && _options.length > 0) {
         if (_options[0].type) {
           // okay configs was ignored, prepend it!
-          options = <IOptions>{configs: _options}
+          options = <IOptions>{configs: _options};
         } else {
-          options = {}
+          options = {};
         }
       } else {
-        options = _options
+        options = _options;
       }
     } else {
-      options = _options
+      options = _options;
     }
 
     if (append) {
-      this.$options = Utils.merge(this.$options, options)
+      this.$options = Utils.merge(this.$options, options);
     } else {
       // clear current jars
       this.$jars = {};
-      Object.assign(this.$options, options)
+      Object.assign(this.$options, options);
     }
 
 
     if (this.$options.fileSupport) {
-      FileSupport.reload(this.$options.fileSupport)
+      FileSupport.reload(this.$options.fileSupport);
     }
 
     if (!this.$options.handlers || this.$options.handlers.length === 0) {
-      this.$options.handlers = ConfigHandler.DEFAULT_HANDLER
+      this.$options.handlers = ConfigHandler.DEFAULT_HANDLER;
     }
 
-    if(!_.isEmpty(this.$options.workdir)){
+    if (!_.isEmpty(this.$options.workdir)) {
       PlatformUtils.setWorkDir(this.$options.workdir);
-    }else if(_.has(this.$options,'workdir')){
+    } else if (_.has(this.$options, 'workdir')) {
       // reset workdir, it is set to null
       PlatformUtils.setWorkDir(null);
     }
@@ -199,7 +197,7 @@ export class Config {
               let _inst_jar = Config.jar(_jar.namespace);
               InterpolationSupport.exec(_config, _inst_jar.data);
               _inst_jar.merge(_jar.data);
-              _inst_jar.sources(_jar.sources())
+              _inst_jar.sources(_jar.sources());
             }
           } else {
             let _jar = <ConfigJar>jar;
@@ -207,26 +205,26 @@ export class Config {
             InterpolationSupport.exec(_config, _inst_jar.data);
             // InterpolationSupport.exec(_inst_jar.data,this._jarsData);
             _inst_jar.merge(_jar.data);
-            _inst_jar.sources(_jar.sources())
+            _inst_jar.sources(_jar.sources());
           }
         } else {
-          _config.state = false
+          _config.state = false;
         }
       } else {
-        throw new Error('handler doesn\'t exists')
+        throw new Error('handler doesn\'t exists');
       }
     }
-    return this.$options
+    return this.$options;
   }
 
 
   static get(path: string = null, namespace_or_fallback?: any, fallback?: any) {
     if (path == null) {
       let data = _.cloneDeep(this.jarsData);
-      if(this.hasJar('system')){
+      if (this.hasJar('system')) {
         data.shift();
       }
-      if(data.length > 1){
+      if (data.length > 1) {
         return _.merge(data.shift(), ...data);
       }
       return data;
@@ -256,7 +254,7 @@ export class Config {
 
   static set(path: string, value: any, namespace: string = 'default'): boolean {
     let jar: ConfigJar = Config.jar(namespace);
-    return jar.set(path, value)
+    return jar.set(path, value);
   }
 
   static clear(): void {

@@ -1,7 +1,7 @@
 import {IConfigData} from "../../config/IConfigData";
 import {IFileSupport} from "../IFileSupport";
 import {clone} from "lodash"
-import {PlatformUtils} from "commons-base";
+import {PlatformUtils} from "@allgemein/base";
 
 let Prop:any;
 

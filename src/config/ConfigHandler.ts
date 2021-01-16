@@ -5,7 +5,7 @@ import {IConfigOptions} from "./IConfigOptions";
 import {IConfigData} from "./IConfigData";
 import {DirectoryConfig} from "./handler/DirectoryConfig";
 import {Utils} from "../";
-import {ClassLoader, StringOrFunction} from "commons-base";
+import {ClassLoader, StringOrFunction} from "@allgemein/base";
 
 
 export class ConfigHandler {

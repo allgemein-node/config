@@ -2,7 +2,7 @@
 
 import {IConfigData} from "../../config/IConfigData";
 import {IFileSupport} from "../IFileSupport";
-import {PlatformUtils} from "commons-base";
+import {PlatformUtils} from "@allgemein/base";
 
 let XML:any;
 

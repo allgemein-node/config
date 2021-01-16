@@ -7,7 +7,7 @@ import {JsonFileSupport} from "./types/JsonFileSupport";
 import {XmlFileSupport} from "./types/XmlFileSupport";
 import {YamlFileSupport} from "./types/YamlFileSupport";
 import {PropertiesFileSupport} from "./types/PropertiesFileSupport";
-import {ClassLoader, StringOrFunction} from "commons-base";
+import {ClassLoader, StringOrFunction} from "@allgemein/base";
 
 
 /**

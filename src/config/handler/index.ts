@@ -1,2 +1,2 @@
-export * from './SystemConfig'
-export * from './FileConfig'
+export * from './SystemConfig';
+export * from './FileConfig';
