@@ -10,18 +10,7 @@ jobs:
       TZ: Europe/Berlin
     steps:
 
-      - run:
-          name: NVM
-          command: |
-            nvm install 14 && nvm use 14 && nvm alias default 14
-            node -v
-            npm -v
-
       - checkout
-
-      - run:
-          name: Update npm
-          command: npm install -g npm@latest
 
       - run:
           name: Install npm wee
