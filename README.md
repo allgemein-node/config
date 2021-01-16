@@ -1,9 +1,9 @@
 
-# node-commons-config
+# @allgemein/config
 
-[![Build Status](https://travis-ci.org/thinkbaer/node-commons-config.svg?branch=master)](https://travis-ci.org/thinkbaer/node-commons-config)
-[![codecov](https://codecov.io/gh/thinkbaer/node-commons-config/branch/master/graph/badge.svg)](https://codecov.io/gh/thinkbaer/node-commons-config)
-[![Dependency Status](https://david-dm.org/thinkbaer/node-commons-config.svg)](https://david-dm.org/thinkbaer/node-commons-config)
+[![Build Status](https://travis-ci.org/allgemein-node/config.svg?branch=master)](https://travis-ci.org/allgemein-node/config)
+[![codecov](https://codecov.io/gh/allgemein-node/config/branch/master/graph/badge.svg)](https://codecov.io/gh/allgemein-node/config)
+[![Dependency Status](https://david-dm.org/allgemein-node/config.svg)](https://david-dm.org/allgemein-node/config)
 
 
 Commons-config is a configurable configuration content handler which supports
