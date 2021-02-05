@@ -1,6 +1,6 @@
 {
   "name": "@allgemein/config",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "@allgemein/config is a configurable configuration content handler which supports multiple configuration infrastructures and file formats.",
   "main": "index.js",
   "browser": "browser.js",
