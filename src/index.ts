@@ -1,28 +1,45 @@
 // browser
-export * from './browser';
+export {
+  ConfigJar,
+  ConfigHandler,
+  Config,
+  IConfigOptions,
+  IOptions,
+  ConfigSupport,
+  IConfigData,
+  IJarOptions,
+  Source,
+  SystemConfig,
+  Utils
+} from './browser';
+
+export {
+  DEFAULT_JAR_NAME, NAMING_BY_DIRECTORY, NAMING_BY_DIRECTORYPATH, NAMING_BY_FILENAME,
+  NAMING_BY_FULLPATH, NamingResolvePattern, SELECTOR_SEPARATOR
+} from './types';
 
 // FileSupport
-export * from './filesupport/IFileSupportInfo'
-export * from './filesupport/IFileSupport'
-export * from './filesupport/FileSupport'
+export {IFileSupportInfo} from './filesupport/IFileSupportInfo';
+export {IFileSupport} from './filesupport/IFileSupport';
+export {FileSupport} from './filesupport/FileSupport';
 
 // Supported types
-export * from './filesupport/types/JsonFileSupport'
-export * from './filesupport/types/XmlFileSupport'
-export * from './filesupport/types/YamlFileSupport'
+export {JsonFileSupport} from './filesupport/types/JsonFileSupport';
+export {XmlFileSupport} from './filesupport/types/XmlFileSupport';
+export {YamlFileSupport} from './filesupport/types/YamlFileSupport';
 
 // FileConfig
-export * from './config/handler/IFilePath'
-export * from './config/handler/IFileConfigOptions'
-export * from './config/handler/FileSource'
-export * from './config/handler/FileConfig'
+export {IFilePath} from './config/handler/IFilePath';
+export {IFileConfigOptions} from './config/handler/IFileConfigOptions';
+export {FileSource} from './config/handler/FileSource';
+export {FileConfig} from './config/handler/FileConfig';
 
 // DirectoryConfig
-export * from './config/handler/IDirectoryConfigOptions'
-export * from './config/handler/DirectoryConfig'
+export {IDirectoryConfigOptions} from './config/handler/IDirectoryConfigOptions';
+export {DirectoryConfig} from './config/handler/DirectoryConfig';
 
 // InterpolationSupport
-export * from './supports/InterpolationSupport'
+export {InterpolationSupport} from './supports/InterpolationSupport';
 
 
 
