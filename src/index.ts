@@ -1,7 +1,6 @@
 // browser
 export {
-  ConfigJar,
-  ConfigHandler,
+  ConfigJar, ,
   Config,
   IConfigOptions,
   IOptions,
@@ -12,6 +11,8 @@ export {
   SystemConfig,
   Utils
 } from './browser';
+
+export {ConfigHandler} from './config/ConfigHandler';
 
 export {
   DEFAULT_JAR_NAME, NAMING_BY_DIRECTORY, NAMING_BY_DIRECTORYPATH, NAMING_BY_FILENAME,
