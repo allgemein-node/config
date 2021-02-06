@@ -4,7 +4,7 @@ import {ConfigSupport} from "./ConfigSupport";
 import {IConfigOptions} from "./IConfigOptions";
 import {IConfigData} from "./IConfigData";
 import {DirectoryConfig} from "./handler/DirectoryConfig";
-import {Utils} from "../";
+import {Utils} from "../utils/Utils";
 import {ClassLoader, StringOrFunction} from "@allgemein/base";
 
 

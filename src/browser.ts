@@ -3,7 +3,7 @@ export {Utils} from './utils/Utils';
 
 // Config
 export {Config} from './config/Config';
-export {ConfigHandler} from './config/ConfigHandler';
+// export {ConfigHandler} from './config/ConfigHandler';
 export {ConfigJar} from './config/ConfigJar';
 
 export {IConfigData} from './config/IConfigData';

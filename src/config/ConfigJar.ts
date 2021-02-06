@@ -1,7 +1,6 @@
 import {IConfigData} from "./IConfigData";
 import {IJarOptions} from "./IJarOptions";
 import * as _ from "lodash";
-
 import {Utils} from "../utils/Utils";
 import {InterpolationSupport} from "../supports/InterpolationSupport";
 import {Config} from "./Config";
