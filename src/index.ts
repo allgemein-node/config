@@ -1,6 +1,6 @@
 // browser
 export {
-  ConfigJar, ,
+  ConfigJar,
   Config,
   IConfigOptions,
   IOptions,
