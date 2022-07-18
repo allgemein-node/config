@@ -111,7 +111,7 @@ Config.options({
         {
             type: 'directory',
             dirname: './config',
-            prefixing: 'by_dirname'
+            prefixing: 'by_dirname',
             suffixPattern: [
                 '${env.stage}',
                 '${os.hostname}',

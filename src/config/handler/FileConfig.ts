@@ -1,3 +1,4 @@
+import {PlatformUtils} from '@allgemein/base';
 import {ConfigSupport} from '../ConfigSupport';
 import {ConfigJar} from '../ConfigJar';
 import {IFileConfigOptions} from './IFileConfigOptions';
@@ -6,7 +7,6 @@ import {IConfigData} from '../IConfigData';
 import {IFilePath} from './IFilePath';
 import {FileSource} from './FileSource';
 import {IJarOptions} from '../IJarOptions';
-import {PlatformUtils} from '@allgemein/base';
 
 
 /**

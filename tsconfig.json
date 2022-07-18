@@ -6,7 +6,7 @@
     ],
     "rootDir": ".",
     "outDir": "./build/compiled",
-    "target": "ES2020",
+    "target": "es6",
     "module": "CommonJS",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -18,9 +18,9 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "stripInternal": true,
-    //"strictNullChecks": true,
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true,
     "typeRoots": [
       "./node_modules/@types"
     ]

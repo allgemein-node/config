@@ -1,8 +1,5 @@
-
 import {IConfigData} from "../../config/IConfigData";
 import {IFileSupport} from "../IFileSupport";
-
-
 
 export class JsonFileSupport implements IFileSupport{
 

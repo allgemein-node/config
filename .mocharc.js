@@ -13,6 +13,6 @@ module.exports = {
   timeout: 60000,
   ui: 'bdd',
   recursive: true,
-  require: 'ts-node/register',
+  require: ['ts-node/register'],
   'watch-extensions': ['ts']
 };

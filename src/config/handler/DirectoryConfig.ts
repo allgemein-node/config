@@ -1,6 +1,6 @@
+import * as _ from 'lodash';
 import {IDirectoryConfigOptions} from './IDirectoryConfigOptions';
 import {ConfigJar} from '../ConfigJar';
-import * as _ from 'lodash';
 import {Utils} from '../../utils/Utils';
 import {IFilePath} from './IFilePath';
 import {IFileConfigOptions} from './IFileConfigOptions';
@@ -14,7 +14,7 @@ import {
   SELECTOR_SEPARATOR
 } from '../../types';
 import {ConfigSupport} from '../ConfigSupport';
-import * as multimatch from 'multimatch';
+import multimatch from 'multimatch';
 import {FileConfig} from './FileConfig';
 import {IConfigData} from '../IConfigData';
 import {PlatformUtils} from '@allgemein/base';
@@ -53,16 +53,16 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
   }
 
   listFilesInDirectory(): IFileConfigOptions[] {
-    let dirname = PlatformUtils.pathNormAndResolve(this.$options.dirname);
+    const dirname = PlatformUtils.pathNormAndResolve(this.$options.dirname);
     if (!PlatformUtils.fileExist(dirname) || !PlatformUtils.isDir(dirname)) {
       throw new Error('wrong directory ' + dirname);
     }
-    let list: string[] = PlatformUtils.load('glob').sync(dirname + '/**');
-    let regex: string = Utils.escapeRegExp(this.$options.patternSeparator);
+    const list: string[] = PlatformUtils.load('glob').sync(dirname + '/**');
+    const regex: string = Utils.escapeRegExp(this.$options.patternSeparator);
 
-    let patternRegex = new RegExp(regex, 'g');
-    let files: IFileConfigOptions[] = [];
-    let self = this;
+    const patternRegex = new RegExp(regex, 'g');
+    const files: IFileConfigOptions[] = [];
+    const self = this;
 
     list.forEach(file_or_dir => {
       let path = file_or_dir.replace(dirname + '', '');
@@ -75,46 +75,46 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
       path = path.replace(/^\//, '');
       if (self.$options.exclude && self.$options.exclude.length > 0) {
         // findes if path is excluded
-        let result = multimatch([path], self.$options.exclude);
-        if (result.length && result[0] == path) {
+        const result = multimatch([path], self.$options.exclude);
+        if (result.length && result[0] === path) {
           return;
         }
       }
 
-      let is_file = PlatformUtils.isFile(file_or_dir);
-      let paths = path.replace(/^\//, '').split('/');
+      const is_file = PlatformUtils.isFile(file_or_dir);
+      const paths = path.replace(/^\//, '').split('/');
 
       if (is_file) {
-        let filename_ext = paths.pop();
-        let filename = PlatformUtils.filename(filename_ext);
+        const filename_ext = paths.pop();
+        const filename = PlatformUtils.filename(filename_ext);
 
         if (!patternRegex.test(filename)) {
 
-          let file: IFilePath = {
+          const file: IFilePath = {
             dirname: file_or_dir.replace(filename_ext, ''),
             filename: filename,
             type: PlatformUtils.pathExtname(filename_ext, false)
           };
 
-          let fileCfg: IFileConfigOptions = {
-            namespace: DEFAULT_JAR_NAME,
+          const fileCfg: IFileConfigOptions = {
+            namespace: this.$options.namespace ? this.$options.namespace : DEFAULT_JAR_NAME,
             file: file,
             pattern: []
           };
 
-          let prefixing = DirectoryConfig.resolveName(self.$options.prefixing, paths, filename, SELECTOR_SEPARATOR);
+          const prefixing = DirectoryConfig.resolveName(self.$options.prefixing, paths, filename, SELECTOR_SEPARATOR);
           if (prefixing) {
             fileCfg.prefix = prefixing;
           }
 
-          let namespacing = DirectoryConfig.resolveName(self.$options.namespaceing, paths, filename, self.$options.namespaceSeparator);
+          const namespacing = DirectoryConfig.resolveName(self.$options.namespaceing, paths, filename, self.$options.namespaceSeparator);
           if (namespacing) {
             fileCfg.namespace = namespacing;
           }
 
           if (this.$options.suffixPattern) {
             this.$options.suffixPattern.forEach(pattern => {
-              let _paths = [filename, pattern];
+              const _paths = [filename, pattern];
               fileCfg.pattern.push(_paths.join(self.$options.patternSeparator));
             });
           }
@@ -132,7 +132,7 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
   static resolveName(named: NamingResolvePattern, paths: string[], filename: string, separator: string = '.'): string {
     let v = null;
     if (named) {
-      let _paths = Utils.clone(paths);
+      const _paths = Utils.clone(paths);
       switch (named) {
         case NAMING_BY_DIRECTORY:
           v = _paths.pop();
@@ -154,12 +154,12 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
 
 
   create(): ConfigJar[] {
-    let files = this.listFilesInDirectory();
-    let jars: { [k: string]: ConfigJar } = {};
+    const files = this.listFilesInDirectory();
+    const jars: { [k: string]: ConfigJar } = {};
 
     files.forEach(_options => {
-      let fileCfg = new FileConfig(_options);
-      let jar = fileCfg.create();
+      const fileCfg = new FileConfig(_options);
+      const jar = fileCfg.create();
       if (jars[jar.namespace]) {
         jars[jar.namespace].merge(jar.data);
         jars[jar.namespace].sources(jar.sources());
@@ -169,7 +169,7 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
 
     });
 
-    let _jars: ConfigJar[] = [];
+    const _jars: ConfigJar[] = [];
     Object.keys(jars).forEach(_k => {
       _jars.push(jars[_k]);
     });

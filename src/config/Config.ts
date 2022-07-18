@@ -95,8 +95,8 @@ export class Config {
   }
 
   get _jars(): ConfigJar[] {
-    let self = this;
-    let jars: ConfigJar[] = [];
+    const self = this;
+    const jars: ConfigJar[] = [];
     Object.keys(this.$jars).forEach(k => {
       jars.push(self.$jars[k]);
     });
@@ -113,8 +113,8 @@ export class Config {
   }
 
   get _jarsData(): IConfigData[] {
-    let self = this;
-    let jars: IConfigData[] = [];
+    const self = this;
+    const jars: IConfigData[] = [];
     Object.keys(this.$jars).forEach(k => {
       jars.push(self.$jars[k].data);
     });
@@ -185,23 +185,23 @@ export class Config {
 
     ConfigHandler.reload(this.$options.handlers);
 
-    for (let _config of this.$options.configs) {
-      let handler: ConfigSupport<any> = ConfigHandler.getHandlerByType(_config.type, _config, this._jarsData);
+    for (const _config of this.$options.configs) {
+      const handler: ConfigSupport<any> = ConfigHandler.getHandlerByType(_config.type, _config, this._jarsData);
       if (handler) {
-        let jar = handler.create();
+        const jar = handler.create();
 
         if (jar) {
           _config.state = true;
           if (Utils.isArray(jar)) {
-            for (let _jar of <ConfigJar[]>jar) {
-              let _inst_jar = Config.jar(_jar.namespace);
+            for (const _jar of <ConfigJar[]>jar) {
+              const _inst_jar = Config.jar(_jar.namespace);
               InterpolationSupport.exec(_config, _inst_jar.data);
               _inst_jar.merge(_jar.data);
               _inst_jar.sources(_jar.sources());
             }
           } else {
-            let _jar = <ConfigJar>jar;
-            let _inst_jar = Config.jar(_jar.namespace);
+            const _jar = <ConfigJar>jar;
+            const _inst_jar = Config.jar(_jar.namespace);
             InterpolationSupport.exec(_config, _inst_jar.data);
             // InterpolationSupport.exec(_inst_jar.data,this._jarsData);
             _inst_jar.merge(_jar.data);
@@ -220,7 +220,7 @@ export class Config {
 
   static get(path: string = null, namespace_or_fallback?: any, fallback?: any) {
     if (path == null) {
-      let data = _.cloneDeep(this.jarsData);
+      const data = _.cloneDeep(this.jarsData);
       if (this.hasJar('system')) {
         data.shift();
       }
@@ -242,7 +242,9 @@ export class Config {
     let _value: any = null;
     for (let i = 0; i < jars.length; i++) {
       _value = jars[i].get(path);
-      if (_value) break;
+      if (_value) {
+        break;
+      }
     }
 
     if (!_value && fallback) {
@@ -253,7 +255,7 @@ export class Config {
 
 
   static set(path: string, value: any, namespace: string = 'default'): boolean {
-    let jar: ConfigJar = Config.jar(namespace);
+    const jar: ConfigJar = Config.jar(namespace);
     return jar.set(path, value);
   }
 

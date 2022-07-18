@@ -25,13 +25,13 @@ class ConfigTests {
     Config.clear();
     Config.options({configs: []}, false);
 
-    let instance = Config.instance();
+    const instance = Config.instance();
     expect(instance['$options'].configs.length).to.eq(0);
     expect(instance['$options'].handlers.length).to.not.eq(0);
     expect(instance['$options'].fileSupport.length).to.not.eq(0);
 
     Config.clear();
-    let options = Config.options();
+    const options = Config.options();
     expect(options.configs.length).to.eq(1);
     expect(options.configs).to.deep.include({type: 'system', state: true});
 
@@ -42,7 +42,7 @@ class ConfigTests {
   'functional'() {
     Config.clear();
 
-    let inst = Config.instance();
+    const inst = Config.instance();
     expect(inst['$options'].configs.length).to.eq(1);
     expect(inst['$options'].configs[0].type).to.eq('system');
 
@@ -54,12 +54,12 @@ class ConfigTests {
     expect(inst['$jars']['system']['_source'][2]['source']).to.eq('argv');
 
     // test method jars
-    let jars: ConfigJar[] = Config.jars;
+    const jars: ConfigJar[] = Config.jars;
     expect(jars.length).to.eq(1);
     expect(jars[0].namespace).to.eq('system');
 
     // test method jarsData
-    let jarsData: IConfigData[] = Config.jarsData;
+    const jarsData: IConfigData[] = Config.jarsData;
     expect(jarsData.length).to.eq(1);
     expect(jarsData[0]['os']['hostname']).to.eq(os.hostname());
 
@@ -78,7 +78,7 @@ class ConfigTests {
     expect(Config.hasJar('default')).to.be.true;
 
     // Returns all without system
-    let all = Config.get();
+    const all = Config.get();
     expect(all).has.length(1);
     expect(all[0]).to.deep.include({env: {hallo_welt: 'ja'}});
 
