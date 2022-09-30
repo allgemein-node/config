@@ -1,6 +1,7 @@
 import {suite, test} from '@testdeck/mocha';
 import {expect} from 'chai';
 import {Utils} from '../../../src/utils/Utils';
+import {TreeUtils} from "@allgemein/base";
 
 
 @suite('utils/Utils')
@@ -76,7 +77,7 @@ class UtilsTests {
   @test
   'walk'() {
     let x: any = {x: 1, y: 1};
-    Utils.walk(x, (data: any) => {
+    TreeUtils.walk(x, (data: any) => {
       data.parent[data.key] = 2;
     });
     expect(x).to.deep.eq({x: 2, y: 2});
