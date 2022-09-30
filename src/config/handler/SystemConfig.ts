@@ -47,7 +47,7 @@ export class SystemConfig extends ConfigSupport<IConfigOptions> {
     let data = Utils.merge({}, process.env);
     let configData: IConfigData = {};
     Object.keys(data).forEach(k => {
-      configData[k.toLocaleLowerCase()] = data[k];
+      configData[k] = data[k];
     });
     jar.merge(new Source({source: 'env', data: configData, prefix: 'env'}));
 
