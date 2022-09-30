@@ -13,7 +13,7 @@ class InterpolationSupportsTests {
   'exec'() {
     // simple test
     let data: IConfigData = {x: 'test', y: '${x}'};
-    let x = Utils.get(data, 'x');
+    const x = Utils.get(data, 'x');
     expect(x).to.eq('test');
 
     InterpolationSupport.exec(data);
@@ -50,4 +50,10 @@ class InterpolationSupportsTests {
     expect(data).to.deep.eq({y: ['inline test and 5!']});
   }
 
+  @test
+  'test fallback string'() {
+    const data = {y: ['inline ${x:-fallback}']};
+    InterpolationSupport.exec(data, []);
+    expect(data).to.deep.eq({y: ['inline fallback']});
+  }
 }
