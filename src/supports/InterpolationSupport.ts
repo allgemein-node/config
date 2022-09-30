@@ -6,14 +6,12 @@ const REGEX = /\${[^}]+}/g;
 
 export class InterpolationSupport {
 
-  // private lookup
-
   static exec(data: IConfigData, ...lookup: any[]): void {
 
     if (!lookup.length) {
       lookup = [data];
-    }else{
-      if(Array.isArray(lookup[0])){
+    } else {
+      if (Array.isArray(lookup[0])) {
         lookup = lookup[0];
       }
     }
@@ -23,27 +21,34 @@ export class InterpolationSupport {
       if (typeof v === 'string' && REGEX.test(v)) {
         const match = v.match(REGEX);
         match.forEach(_match => {
-          const path = _match.replace(/^\${|}$/g, '');
+          const content = _match.replace(/^\${|}$/g, '');
+          const splits = content.split(':-', 2);
+          const path = splits.shift();
+          const hasFallback = splits.length > 0;
+          const fallback = splits.shift();
           let _value = null;
 
-          for(let i=0;i<lookup.length;i++){
+          for (let i = 0; i < lookup.length; i++) {
             _value = Utils.get(lookup[i], path);
-            if(_value) {
+            if (_value) {
               break;
             }
           }
 
-
           if (_value) {
-
             if (x.index !== null) {
               x.parent[x.key][x.index] = v = v.replace(_match, _value);
             } else {
               x.parent[x.key] = v = v.replace(_match, _value);
             }
           } else {
-            // not found ignore replacement!
-            // throw new Error('value not found for match ' + _match + ' path=' + path)
+            if (hasFallback) {
+              if (x.index !== null) {
+                x.parent[x.key][x.index] = v = v.replace(_match, fallback);
+              } else {
+                x.parent[x.key] = v = v.replace(_match, fallback);
+              }
+            }
           }
         });
       }
