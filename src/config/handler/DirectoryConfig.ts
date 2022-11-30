@@ -14,10 +14,10 @@ import {
   SELECTOR_SEPARATOR
 } from '../../types';
 import {ConfigSupport} from '../ConfigSupport';
-import multimatch from 'multimatch';
 import {FileConfig} from './FileConfig';
 import {IConfigData} from '../IConfigData';
 import {PlatformUtils} from '@allgemein/base';
+import * as mm from 'micromatch';
 
 
 /**
@@ -62,7 +62,7 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
 
     const patternRegex = new RegExp(regex, 'g');
     const files: IFileConfigOptions[] = [];
-    const self = this;
+    // const self = this;
 
     list.forEach(file_or_dir => {
       let path = file_or_dir.replace(dirname + '', '');
@@ -73,9 +73,9 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
       }
 
       path = path.replace(/^\//, '');
-      if (self.$options.exclude && self.$options.exclude.length > 0) {
+      if (this.$options.exclude && this.$options.exclude.length > 0) {
         // findes if path is excluded
-        const result = multimatch([path], self.$options.exclude);
+        const result = mm.default([path], this.$options.exclude, {dot: true});
         if (result.length && result[0] === path) {
           return;
         }
@@ -102,12 +102,12 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
             pattern: []
           };
 
-          const prefixing = DirectoryConfig.resolveName(self.$options.prefixing, paths, filename, SELECTOR_SEPARATOR);
+          const prefixing = DirectoryConfig.resolveName(this.$options.prefixing, paths, filename, SELECTOR_SEPARATOR);
           if (prefixing) {
             fileCfg.prefix = prefixing;
           }
 
-          const namespacing = DirectoryConfig.resolveName(self.$options.namespaceing, paths, filename, self.$options.namespaceSeparator);
+          const namespacing = DirectoryConfig.resolveName(this.$options.namespaceing, paths, filename, this.$options.namespaceSeparator);
           if (namespacing) {
             fileCfg.namespace = namespacing;
           }
@@ -115,7 +115,7 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
           if (this.$options.suffixPattern) {
             this.$options.suffixPattern.forEach(pattern => {
               const _paths = [filename, pattern];
-              fileCfg.pattern.push(_paths.join(self.$options.patternSeparator));
+              fileCfg.pattern.push(_paths.join(this.$options.patternSeparator));
             });
           }
           files.push(fileCfg);
@@ -160,11 +160,15 @@ export class DirectoryConfig extends ConfigSupport<IDirectoryConfigOptions> {
     files.forEach(_options => {
       const fileCfg = new FileConfig(_options);
       const jar = fileCfg.create();
-      if (jars[jar.namespace]) {
-        jars[jar.namespace].merge(jar.data);
-        jars[jar.namespace].sources(jar.sources());
+      if (jar) {
+        if (jars[jar.namespace]) {
+          jars[jar.namespace].merge(jar.data);
+          jars[jar.namespace].sources(jar.sources());
+        } else {
+          jars[jar.namespace] = jar;
+        }
       } else {
-        jars[jar.namespace] = jar;
+        throw new Error('Unknown problem with configuration file ' + JSON.stringify(_options));
       }
 
     });
